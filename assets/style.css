@@ -1,0 +1,220 @@
+/* ============================================
+   TPS System — Child-Friendly Design System
+   Grade 5 / Filipino Elementary Students
+   ============================================ */
+
+:root {
+    --tps-yellow:   #FFD93D;
+    --tps-orange:   #FF6B35;
+    --tps-pink:     #FF6B9D;
+    --tps-purple:   #C77DFF;
+    --tps-blue:     #4CC9F0;
+    --tps-green:    #06D6A0;
+    --tps-red:      #EF233C;
+    --tps-dark:     #2D3436;
+    --tps-light:    #FFF9F0;
+    --tps-card-bg:  rgba(255, 255, 255, 0.97);
+    --tps-radius:   20px;
+    --tps-radius-sm:12px;
+}
+
+/* ── Base ─────────────────────────────────── */
+body {
+    font-family: 'Segoe UI', 'Comic Sans MS', Tahoma, sans-serif;
+}
+
+/* ── Breadcrumb ───────────────────────────── */
+.breadcrumb {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 50rem;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: rgba(255,255,255,0.7);
+    font-size: 1.25rem;
+}
+.breadcrumb-item a {
+    color: rgba(255,255,255,0.95);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.breadcrumb-item a:hover { color: var(--tps-yellow); }
+.breadcrumb-item.active { color: white; font-weight: 600; }
+
+/* ── Page Headers ─────────────────────────── */
+.mb-4 > h1.h3,
+.mb-4 > div > h1.h3 {
+    font-size: 1.75rem;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+
+/* ── Cards ────────────────────────────────── */
+.card {
+    border: none;
+    border-radius: var(--tps-radius) !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: var(--tps-card-bg);
+    backdrop-filter: blur(12px);
+    margin-bottom: 1rem;
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+}
+.card-header {
+    background: transparent;
+    border-bottom: 2px dashed rgba(0,0,0,0.07);
+    font-weight: 700;
+    padding: 1rem 1.25rem;
+    border-radius: var(--tps-radius) var(--tps-radius) 0 0 !important;
+}
+
+/* ── Action Buttons ───────────────────────── */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 50rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: 1;
+    min-height: unset;
+}
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    filter: brightness(1.08);
+}
+.action-btn:active { transform: translateY(0); box-shadow: none; }
+
+.action-btn-edit    { background: linear-gradient(135deg, #C77DFF, #9B5DE5); color: #fff; }
+.action-btn-delete  { background: linear-gradient(135deg, #FF6B9D, #EF233C); color: #fff; }
+.action-btn-control { background: linear-gradient(135deg, #06D6A0, #00B4D8); color: #fff; }
+.action-btn-end     { background: linear-gradient(135deg, #FFD93D, #FF6B35); color: #fff; }
+.action-btn-chat    { background: linear-gradient(135deg, #4CC9F0, #4361EE); color: #fff; }
+.action-btn-view    { background: linear-gradient(135deg, #C77DFF, #7B2FBE); color: #fff; }
+.action-btn-cancel  { background: rgba(100,116,139,0.12); color: #475569; }
+.action-btn-cancel:hover { background: rgba(100,116,139,0.22); color: #1e293b; }
+.action-btns { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+
+/* ── Badges ───────────────────────────────── */
+.badge { font-weight: 600; padding: 0.4em 0.75em; border-radius: 50rem; }
+
+/* ── List Group ───────────────────────────── */
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    transition: background-color 0.2s ease;
+    background: var(--tps-card-bg);
+}
+.list-group-item:first-child { border-top: none; }
+.list-group-item:last-child  { border-bottom: none; }
+.list-group-item-action:hover { background-color: #fff9f0; }
+
+/* ── Page Title ───────────────────────────── */
+.display-6 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+/* ── Status Badges ────────────────────────── */
+.status-waiting         { background: #FFF3CD; color: #856404; }
+.status-answering       { background: #D1ECF1; color: #0C5460; }
+.status-ready_for_pairing { background: #E2E3E5; color: #383D41; }
+.status-paired          { background: #D4EDDA; color: #155724; }
+.status-chatting        { background: #E8D5FB; color: #5B21B6; }
+.status-active          { background: #C3F6E0; color: #065F46; }
+.status-ended           { background: #F8D7DA; color: #721C24; }
+.status-pairing         { background: #CCE5FF; color: #004085; }
+
+/* Status emoji prefixes */
+.status-waiting::before         { content: "⏳ "; }
+.status-answering::before       { content: "💭 "; }
+.status-ready_for_pairing::before { content: "🔄 "; }
+.status-paired::before          { content: "🤝 "; }
+.status-chatting::before        { content: "💬 "; }
+.status-active::before          { content: "▶️ "; }
+.status-ended::before           { content: "🏁 "; }
+.status-pairing::before         { content: "🔀 "; }
+
+/* ── Timer ────────────────────────────────── */
+.timer-display {
+    font-size: 3rem;
+    font-weight: 800;
+    font-family: monospace;
+    background: linear-gradient(135deg, var(--tps-orange), var(--tps-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Chat ─────────────────────────────────── */
+.chat-messages {
+    height: 300px;
+    overflow-y: auto;
+    background: #FFF9F0;
+    border-radius: var(--tps-radius-sm);
+    -webkit-overflow-scrolling: touch;
+}
+.message {
+    max-width: 85%;
+    margin-bottom: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 18px;
+    word-wrap: break-word;
+}
+.message-sent {
+    background: linear-gradient(135deg, var(--tps-orange), var(--tps-pink));
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+.message-received {
+    background: white;
+    border: 2px solid #FFE0CC;
+    border-bottom-left-radius: 4px;
+}
+
+/* ── Stats Grid ───────────────────────────── */
+.stat-card { text-align: center; padding: 1rem; border-radius: var(--tps-radius-sm); }
+.stat-number { font-size: 1.75rem; font-weight: 800; }
+.stat-label  { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+.status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+@media (min-width: 768px) { .status-grid { grid-template-columns: repeat(5, 1fr); } }
+
+/* ── Pulse animation ──────────────────────── */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.05); }
+}
+
+/* ── Touch / Mobile ───────────────────────── */
+a, button, input, select, textarea, .btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+@media (max-width: 768px) {
+    input, textarea, select { font-size: 16px !important; }
+    .timer-display { font-size: 2.5rem; }
+}
+@media (hover: none) {
+    .btn:hover, .card:hover { transform: none; }
+}
+
+/* ── bg-light override ────────────────────── */
+.bg-light { background-color: #FFF9F0 !important; }

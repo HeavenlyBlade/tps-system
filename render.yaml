@@ -1,0 +1,56 @@
+services:
+  # ── PHP Web Service ──────────────────────────────────────────────────────────
+  - type: web
+    name: tps-system
+    runtime: image
+    image:
+      url: docker.io/library/php:8.2-apache
+    buildCommand: |
+      apt-get update -y
+      apt-get install -y libpng-dev libjpeg-dev libwebp-dev unzip
+      docker-php-ext-install pdo pdo_mysql
+      a2enmod rewrite headers deflate expires
+      cp /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/
+      echo 'ServerName localhost' >> /etc/apache2/apache2.conf
+      echo '<Directory /var/www/html>' >> /etc/apache2/apache2.conf
+      echo '  AllowOverride All' >> /etc/apache2/apache2.conf
+      echo '</Directory>' >> /etc/apache2/apache2.conf
+    startCommand: apache2-foreground
+    plan: free
+    rootDir: .
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DB_HOST
+        fromDatabase:
+          name: tps-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: tps-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: tps-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: tps-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: tps-db
+          property: password
+      - key: QUESTION_TIME_SECONDS
+        value: "300"
+    disk:
+      name: tps-storage
+      mountPath: /var/www/html/storage
+      sizeGB: 1
+
+databases:
+  # ── MySQL Database ───────────────────────────────────────────────────────────
+  - name: tps-db
+    databaseName: tps_system
+    user: tps_user
+    plan: free

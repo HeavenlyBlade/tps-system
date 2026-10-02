@@ -1,0 +1,80 @@
+# ── TPS System — Apache configuration ───────────────────────────────────────
+# Works both locally (XAMPP) and on Render (Apache shared hosting / Docker).
+
+# ── Security headers ─────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options    "nosniff"
+    Header always set X-Frame-Options           "SAMEORIGIN"
+    Header always set X-XSS-Protection          "1; mode=block"
+    Header always set Referrer-Policy           "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy        "geolocation=(), microphone=(), camera=()"
+    # Remove server fingerprint
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# Hide PHP version
+ServerSignature Off
+
+# ── Block direct access to sensitive files ───────────────────────────────────
+<FilesMatch "^(config\.php|database\.sql|\.env|composer\.lock|package-lock\.json|.*\.md|.*\.txt|.*\.log|.*\.sh|.*\.yaml|.*\.yml)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Allow README and DEPLOYMENT through if explicitly browsed (optional — keep denied for security)
+# Exception: allow manifest.json and sw.js (PWA)
+<Files "manifest.json">
+    Order Allow,Deny
+    Allow from all
+</Files>
+<Files "sw.js">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# ── Block access to debug/test scripts ───────────────────────────────────────
+<FilesMatch "^(quick_test|test_dashboard|test_system|test_video|fix_stuck_students|reset_passwords|clear_cache|update_database)\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Disable directory listing ─────────────────────────────────────────────────
+Options -Indexes
+
+# ── Rewrite engine ───────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # On Render the app lives at the domain root; locally it's under /tps-system/.
+    # The RewriteBase handles both cases.
+    RewriteBase /
+
+    # Redirect root to login when not logged in (handled by index.php, but
+    # ensure the root hit reaches index.php).
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^$ index.php [L]
+
+    # Force HTTPS in production (Render terminates TLS, forwards X-Forwarded-Proto).
+    RewriteCond %{HTTP:X-Forwarded-Proto} =http
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ── Static asset caching ─────────────────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css                  "access plus 1 week"
+    ExpiresByType application/javascript    "access plus 1 week"
+    ExpiresByType image/png                 "access plus 1 month"
+    ExpiresByType image/jpeg                "access plus 1 month"
+    ExpiresByType image/svg+xml             "access plus 1 month"
+    ExpiresByType video/mp4                 "access plus 1 month"
+    ExpiresByType font/woff2                "access plus 1 month"
+    ExpiresByType application/font-woff     "access plus 1 month"
+</IfModule>
+
+# ── Gzip compression ─────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/plain
+</IfModule>

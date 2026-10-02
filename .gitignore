@@ -1,0 +1,33 @@
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+error_log
+
+# Local XAMPP docs (don't commit)
+GUIDE_OFFLINE.txt
+GUIDE_ONLINE.txt
+SETUP_NEW_LAPTOP.txt
+Plans.txt
+27Questions.txt
+DEVNOTES.md
+
+# Node (if ever added)
+node_modules/
+
+# PHP cache
+/vendor/
